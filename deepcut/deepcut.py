@@ -312,34 +312,8 @@ class DeepcutTokenizer(object):
         # ref: https://github.com/keras-team/keras/issues/2397
  
         y_predict = self.model.predict([x_char, x_type])
-        y_predict = (y_predict.ravel() > 0.5).astype(int)
-        word_end = y_predict[1:].tolist() + [1]
-
-        if custom_dict is not None:
-            if isinstance(custom_dict, list):
-                word_list = custom_dict
-            else:
-                word_list = []
-                try:
-                    with open(custom_dict) as f:
-                        word_list = f.readlines()
-                except:
-                    pass
-            if len(word_list) > 0:
-                for word in word_list:
-                    if isinstance(word, str) and sys.version_info.major == 2:
-                        word = word.decode('utf-8')
-                    word = word.strip('\n')
-                    word_end = _custom_dict(word, text, word_end)
-
-        tokens = []
-        word = ''
-        for char, w_e in zip(text, word_end):
-            word += char
-            if w_e:
-                tokens.append(word)
-                word = ''
-        return tokens
+        c = [i[0] for i in y_predict.tolist()]
+        return list(zip(list(text),c))
 
     def save_model(self, file_path):
         """
