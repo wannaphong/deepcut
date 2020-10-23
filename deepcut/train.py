@@ -15,7 +15,7 @@ else:
     from .utils import create_n_gram_df, CHAR_TYPE_FLATTEN, CHARS_MAP, CHAR_TYPES_MAP
     from .model import get_convo_nn2
 
-article_types = ['article', 'encyclopedia', 'news', 'novel']
+article_types = ['data']
 
 def generate_words(files):
     """
